@@ -1,9 +1,10 @@
+import ApiTester from "./ApiTester";
 import "./App.css";
 
 function App() {
   return (
     <>
-      <section>Hello World</section>
+      <ApiTester />
     </>
   );
 }
