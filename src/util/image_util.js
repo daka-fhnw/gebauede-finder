@@ -2,7 +2,10 @@ export function readImage(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = () => resolve(reader.result);
-    reader.onerror = () => reject(reader.error);
+    reader.onerror = () => {
+      console.error(reader.error);
+      reject("Laden der Bilddatei fehlgeschlagen.");
+    };
     reader.readAsDataURL(file);
   });
 }
@@ -32,7 +35,7 @@ export function transformImage(dataURL, properties) {
       ctx.fillRect(0, 0, cw, ch);
       if (steps.length !== 0) {
         const matrix = steps.reduce(
-          (acc, m) => m.multiply(acc),
+          (accumulator, current) => current.multiply(accumulator),
           new DOMMatrix(),
         );
         ctx.setTransform(matrix);
@@ -40,7 +43,7 @@ export function transformImage(dataURL, properties) {
       ctx.drawImage(img, 0, 0, w, h);
       resolve(canvas.toDataURL("image/jpeg", properties.qualityPerc));
     };
-    img.onerror = () => reject("Bild-Transformation fehlgeschlagen.");
+    img.onerror = () => reject("Transformation des Bildes fehlgeschlagen.");
     img.src = dataURL;
   });
 }
