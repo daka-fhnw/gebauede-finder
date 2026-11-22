@@ -98,7 +98,7 @@ export default function Images({ data, setData }) {
                   max={1}
                   step={0.05}
                   value={qualityPerc}
-                  onChange={(event) => setQualityPerc(event.target.value)}
+                  onChange={(event) => setQualityPerc(parseFloat(event.target.value))}
                   disabled={loading}
                 />
               </Col>
