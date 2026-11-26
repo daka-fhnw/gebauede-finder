@@ -65,6 +65,7 @@ export default function Images({ data, setData }) {
   };
   return (
     <>
+      <h2>Bilder</h2>
       <Row>
         <Col xs={12} md={9} lg={6}>
           <Form.Group controlId="formFiles" className="mb-3">
@@ -98,7 +99,9 @@ export default function Images({ data, setData }) {
                   max={1}
                   step={0.05}
                   value={qualityPerc}
-                  onChange={(event) => setQualityPerc(parseFloat(event.target.value))}
+                  onChange={(event) =>
+                    setQualityPerc(parseFloat(event.target.value))
+                  }
                   disabled={loading}
                 />
               </Col>

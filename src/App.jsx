@@ -1,40 +1,29 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Container from "react-bootstrap/Container";
 import Header from "./comps/Header";
-import Tab from "react-bootstrap/Tab";
-import Tabs from "react-bootstrap/Tabs";
-import { Container } from "react-bootstrap";
 import Images from "./comps/Images";
-import { useState } from "react";
-import Inspection from "./comps/Inspection";
 import Data from "./comps/Data";
+import Inspection from "./comps/Inspection";
 import Query from "./comps/Query";
+import { useState } from "react";
 
 export default function App() {
+  const [page, setPage] = useState(0);
   const [data, setData] = useState({});
+
   return (
     <>
-      <Header />
-      <Container>
-        <Tabs
-          defaultActiveKey="images"
-          transition={false}
-          className="mt-3 mb-3"
-          fill
-        >
-          <Tab eventKey="images" title="Bilder">
-            <Images data={data} setData={setData} />
-          </Tab>
-          <Tab eventKey="data" title="Daten">
-            <Data data={data} setData={setData} />
-          </Tab>
-          <Tab eventKey="inspection" title="Kontrolle">
-            <Inspection data={data} setData={setData} />
-          </Tab>
-          <Tab eventKey="query" title="Abfrage">
-            <Query data={data} setData={setData} />
-          </Tab>
-        </Tabs>
+      <Header page={page} setPage={setPage} />
+      <Container className="mt-3 mb-3">
+        <div className={page !== 0 ? "d-none" : ""}>
+          <Images data={data} setData={setData} />
+        </div>
+        {page === 1 && <Data data={data} setData={setData} />}
+        {page === 2 && <Inspection data={data} setData={setData} />}
+        <div className={page !== 3 ? "d-none" : ""}>
+          <Query data={data} setData={setData} />
+        </div>
       </Container>
     </>
   );

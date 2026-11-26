@@ -1,3 +1,7 @@
 export default function Query({ data, setData }) {
-  return <></>;
+  return (
+    <>
+      <h2>Abfrage</h2>
+    </>
+  );
 }
