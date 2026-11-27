@@ -7,7 +7,7 @@ import Alert from "react-bootstrap/Alert";
 import { useState } from "react";
 import { readImage, transformImage } from "../util/image_util";
 
-export default function Images({ data, setData }) {
+export default function Images({ setImages }) {
   const [files, setFiles] = useState(null);
   const [widthPx, setWidthPx] = useState(1024);
   const [qualityPerc, setQualityPerc] = useState(0.8);
@@ -24,32 +24,27 @@ export default function Images({ data, setData }) {
     let errorList = [];
     const appendError = (error) => (errorList = [...errorList, error]);
     try {
-      const newData = [];
+      const newImages = [];
       const properties = { widthPx, qualityPerc, rotate90, mirrorX, mirrorY };
       let successCount = 0;
       if (files) {
         for (let i = 0; i < files.length; i++) {
           const file = files[i];
-          const name = file.name;
+          const filename = file.name;
           try {
             const dataURL = await transformImage(
               await readImage(file),
               properties,
             );
-            const nameEntry = {
-              ...(data.find((entry) => entry.name === name) ?? { name }),
-              properties,
-              dataURL,
-            };
-            newData.push(nameEntry);
+            newImages.push({ filename, properties, dataURL });
             successCount++;
           } catch (error) {
             console.error(error);
             appendError(`Fehler beim Laden von Bild "${file.name}".`);
           }
         }
-        console.log(newData);
-        setData(newData);
+        console.log(newImages);
+        setImages(newImages);
         setSuccess(
           `${successCount} von ${files.length} Bildern erfolgreich geladen.`,
         );
@@ -87,7 +82,6 @@ export default function Images({ data, setData }) {
               disabled={loading}
             />
           </Form.Group>
-
           <Form.Group controlId="formQualityPerc" className="mb-3">
             <Form.Label>JPEG-Qualität</Form.Label>
             <Row>
