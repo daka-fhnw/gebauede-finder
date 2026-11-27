@@ -68,6 +68,10 @@ export default function Query({ images, setResults }) {
                 coordinate: parseCoordinate(parsed["Koordinaten"]),
                 reasoning,
               },
+              api: {
+                baseUrl,
+                model,
+              },
             });
             successCount++;
           } catch (error) {

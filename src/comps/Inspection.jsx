@@ -37,7 +37,6 @@ export default function Inspection({ images, data, results }) {
         .filter((entry) => entry.dataURL != null)
         .map((entry) => (
           <div key={entry.filename}>
-            <div className="mb-2 fw-bold">{entry.filename}</div>
             <Row key={entry.filename} className="text-break">
               <Col xs={12} md={5} lg={4}>
                 <div className="mb-2">
@@ -47,6 +46,7 @@ export default function Inspection({ images, data, results }) {
                     style={{ maxWidth: "100%", maxHeight: "350px" }}
                   />
                 </div>
+                <div className="mb-2 fw-bold">{entry.filename}</div>
               </Col>
               <Col xs={12} md={7} lg={8}>
                 <Row key={entry.filename}>
@@ -69,6 +69,17 @@ export default function Inspection({ images, data, results }) {
                         <span className="fw-bold">Koordinaten: </span>
                         {entry.data?.coordinate?.lat},{" "}
                         {entry.data?.coordinate?.lng}
+                      </div>
+                    </div>
+                    <h3>API</h3>
+                    <div className="mb-2">
+                      <div>
+                        <span className="fw-bold">Modell: </span>
+                        {entry.api?.model}
+                      </div>
+                      <div>
+                        <span className="fw-bold">Basis-URL: </span>
+                        {entry.api?.baseUrl}
                       </div>
                     </div>
                   </Col>
