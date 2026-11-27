@@ -7,7 +7,7 @@ import Alert from "react-bootstrap/Alert";
 import { useState } from "react";
 import { readImage, transformImage } from "../util/image_util";
 
-export default function Images({ setImages }) {
+export default function Images({ setImages, setResults }) {
   const [files, setFiles] = useState(null);
   const [widthPx, setWidthPx] = useState(1024);
   const [qualityPerc, setQualityPerc] = useState(0.8);
@@ -24,10 +24,10 @@ export default function Images({ setImages }) {
     let errorList = [];
     const appendError = (error) => (errorList = [...errorList, error]);
     try {
-      const newImages = [];
-      const properties = { widthPx, qualityPerc, rotate90, mirrorX, mirrorY };
-      let successCount = 0;
       if (files) {
+        const newImages = [];
+        const properties = { widthPx, qualityPerc, rotate90, mirrorX, mirrorY };
+        let successCount = 0;
         for (let i = 0; i < files.length; i++) {
           const file = files[i];
           const filename = file.name;
@@ -43,11 +43,13 @@ export default function Images({ setImages }) {
             appendError(`Fehler beim Laden von Bild "${file.name}".`);
           }
         }
-        console.log(newImages);
         setImages(newImages);
-        setSuccess(
-          `${successCount} von ${files.length} Bildern erfolgreich geladen.`,
-        );
+        setResults([]);
+        if (successCount) {
+          setSuccess(
+            `${successCount} von ${files.length} Bildern erfolgreich geladen.`,
+          );
+        }
       } else {
         appendError("Keine Datei ausgewählt.");
       }
@@ -151,8 +153,8 @@ export default function Images({ setImages }) {
         </Alert>
       )}
       {errors &&
-        errors.map((error) => (
-          <Alert variant="danger" className="mb-2">
+        errors.map((error, idx) => (
+          <Alert key={idx} variant="danger" className="mb-2">
             {error}
           </Alert>
         ))}

@@ -17,10 +17,10 @@ export default function Header({ page, setPage }) {
               Daten
             </Nav.Link>
             <Nav.Link active={page === 2} onClick={() => setPage(2)}>
-              Kontrolle
+              Abfrage
             </Nav.Link>
             <Nav.Link active={page === 3} onClick={() => setPage(3)}>
-              Abfrage
+              Kontrolle
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>

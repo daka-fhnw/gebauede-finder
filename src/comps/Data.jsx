@@ -8,7 +8,7 @@ import Papa from "papaparse";
 import { useState } from "react";
 import { unflattenObject } from "../util/object_util";
 
-export default function Data({ setData }) {
+export default function Data({ setData, setResults }) {
   const [dataFile, setDataFile] = useState(null);
   const [fileHeader, setFileHeader] = useState("dateiname");
   const [nameHeader, setNameHeader] = useState("name");
@@ -29,7 +29,7 @@ export default function Data({ setData }) {
       [countryHeader]: "data.country",
       [localityHeader]: "data.locality",
       [latitudeHeader]: "data.coordinate.lat",
-      [longitudeHeader]: "data.coordinate.lon",
+      [longitudeHeader]: "data.coordinate.lng",
     };
     if (dataFile) {
       Papa.parse(dataFile, {
@@ -45,13 +45,13 @@ export default function Data({ setData }) {
             filename: entry.filename,
             data: entry.data,
           }));
-          console.log(newData);
           setData(newData);
+          setResults([]);
           setSuccess(`${newData.length} Zeilen erfolgreich geladen.`);
         },
         error: (err) => {
-          console.err(err.message);
-          setError("Laden durch Fehler abgebo");
+          console.error(err.message);
+          setError("Laden durch Fehler abgebrochen.");
         },
       });
     } else {

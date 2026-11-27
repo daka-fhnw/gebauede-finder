@@ -12,21 +12,23 @@ export default function App() {
   const [page, setPage] = useState(0);
   const [images, setImages] = useState([]);
   const [data, setData] = useState([]);
-
+  const [results, setResults] = useState([]);
   return (
     <>
       <Header page={page} setPage={setPage} />
       <Container className="mt-3 mb-3">
         <div className={page !== 0 ? "d-none" : ""}>
-          <Images setImages={setImages} />
+          <Images setImages={setImages} setResults={setResults} />
         </div>
         <div className={page !== 1 ? "d-none" : ""}>
-          <Data setData={setData} />
+          <Data setData={setData} setResults={setResults} />
         </div>
-        {page === 2 && <Inspection images={images} data={data} />}
-        <div className={page !== 3 ? "d-none" : ""}>
-          <Query data={data} setData={setData} />
+        <div className={page !== 2 ? "d-none" : ""}>
+          <Query images={images} setResults={setResults} />
         </div>
+        {page === 3 && (
+          <Inspection images={images} data={data} results={results} />
+        )}
       </Container>
     </>
   );

@@ -17,6 +17,12 @@ function setPath(obj, path, value) {
 }
 
 export function mergeObjectsByFilename(listA, listB) {
+  if (listA.length === 0) {
+    return listB;
+  }
+  if (listB.length === 0) {
+    return listA;
+  }
   const map = new Map();
   for (const item of [...listA, ...listB]) {
     map.set(item.filename, { ...map.get(item.filename), ...item });
