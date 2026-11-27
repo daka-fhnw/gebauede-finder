@@ -1,12 +1,12 @@
-export default function Inspection({ data, setData }) {
+export default function Inspection({ data }) {
   return (
     <>
       <h2>Kontrolle</h2>
-      {Object.entries(data).map(([key, value]) => (
-        <div key={key}>
-          <div>{value.name}</div>
+      {data.map((entry) => (
+        <div key={entry.name}>
+          <div>{entry.name}</div>
           <img
-            src={value.dataURL}
+            src={entry.dataURL}
             alt="Vorschau"
             style={{ maxWidth: "100%", maxHeight: 250 }}
           />

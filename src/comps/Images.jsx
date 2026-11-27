@@ -24,7 +24,7 @@ export default function Images({ data, setData }) {
     let errorList = [];
     const appendError = (error) => (errorList = [...errorList, error]);
     try {
-      const newData = { ...data };
+      const newData = [];
       const properties = { widthPx, qualityPerc, rotate90, mirrorX, mirrorY };
       let successCount = 0;
       if (files) {
@@ -36,18 +36,19 @@ export default function Images({ data, setData }) {
               await readImage(file),
               properties,
             );
-            newData[name] = {
-              ...(newData[name] ?? {}),
-              ...properties,
-              name,
+            const nameEntry = {
+              ...(data.find((entry) => entry.name === name) ?? { name }),
+              properties,
               dataURL,
             };
+            newData.push(nameEntry);
             successCount++;
           } catch (error) {
             console.error(error);
             appendError(`Fehler beim Laden von Bild "${file.name}".`);
           }
         }
+        console.log(newData);
         setData(newData);
         setSuccess(
           `${successCount} von ${files.length} Bildern erfolgreich geladen.`,

@@ -10,7 +10,7 @@ import { useState } from "react";
 
 export default function App() {
   const [page, setPage] = useState(0);
-  const [data, setData] = useState({});
+  const [data, setData] = useState([]);
 
   return (
     <>
@@ -19,7 +19,9 @@ export default function App() {
         <div className={page !== 0 ? "d-none" : ""}>
           <Images data={data} setData={setData} />
         </div>
-        {page === 1 && <Data data={data} setData={setData} />}
+        <div className={page !== 1 ? "d-none" : ""}>
+          <Data data={data} setData={setData} />
+        </div>
         {page === 2 && <Inspection data={data} setData={setData} />}
         <div className={page !== 3 ? "d-none" : ""}>
           <Query data={data} setData={setData} />
